@@ -10,7 +10,10 @@ import { getBridgeDocDescriptors } from "@/lib/bridge-docs";
 import { getVersionContent } from "@/lib/version-content";
 
 export function generateStaticParams() {
-  return LEARNING_PATH.map((version) => ({ version }));
+  const locales = ["en", "vi", "zh", "ja"];
+  return locales.flatMap((locale) =>
+    LEARNING_PATH.map((version) => ({ locale, version }))
+  );
 }
 
 export default async function VersionPage({

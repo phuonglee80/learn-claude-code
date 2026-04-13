@@ -34,11 +34,12 @@ const SLICE_STYLE: Record<
       "border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-900/60 dark:bg-blue-950/30 dark:text-blue-300",
     surface:
       "from-blue-500/12 via-blue-500/5 to-transparent dark:from-blue-500/10 dark:via-transparent",
-    title: { zh: "主线执行", en: "Mainline", ja: "主線実行" },
+    title: { zh: "主线执行", en: "Mainline", ja: "主線実行", vi: "Thực thi luồng chính" },
     note: {
       zh: "真正把系统往前推的那条执行主线。",
       en: "The path that actually pushes the system forward.",
       ja: "実際にシステムを前へ進める主線です。",
+      vi: "Luồng thực thi thực sự đẩy hệ thống tiến về phía trước.",
     },
   },
   control: {
@@ -47,11 +48,12 @@ const SLICE_STYLE: Record<
       "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-900/60 dark:bg-emerald-950/30 dark:text-emerald-300",
     surface:
       "from-emerald-500/12 via-emerald-500/5 to-transparent dark:from-emerald-500/10 dark:via-transparent",
-    title: { zh: "控制面", en: "Control Plane", ja: "制御面" },
+    title: { zh: "控制面", en: "Control Plane", ja: "制御面", vi: "Tầng điều khiển" },
     note: {
       zh: "决定怎么运行、何时放行、何时转向。",
       en: "Decides how execution is controlled, gated, and redirected.",
       ja: "どう動かし、いつ通し、いつ向きを変えるかを決めます。",
+      vi: "Quyết định cách thực thi được điều khiển, cấp phép và chuyển hướng.",
     },
   },
   state: {
@@ -60,11 +62,12 @@ const SLICE_STYLE: Record<
       "border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-900/60 dark:bg-amber-950/30 dark:text-amber-300",
     surface:
       "from-amber-500/12 via-amber-500/5 to-transparent dark:from-amber-500/10 dark:via-transparent",
-    title: { zh: "状态容器", en: "State Records", ja: "状態レコード" },
+    title: { zh: "状态容器", en: "State Records", ja: "状態レコード", vi: "Bản ghi trạng thái" },
     note: {
       zh: "真正需要被系统记住和回写的结构。",
       en: "The structures the system must remember and write back.",
       ja: "システムが記憶し、回写すべき構造です。",
+      vi: "Các cấu trúc mà hệ thống phải ghi nhớ và ghi lại.",
     },
   },
   lanes: {
@@ -73,11 +76,12 @@ const SLICE_STYLE: Record<
       "border-rose-200 bg-rose-50 text-rose-700 dark:border-rose-900/60 dark:bg-rose-950/30 dark:text-rose-300",
     surface:
       "from-rose-500/12 via-rose-500/5 to-transparent dark:from-rose-500/10 dark:via-transparent",
-    title: { zh: "并行 / 外部车道", en: "Lanes / External", ja: "並行 / 外部レーン" },
+    title: { zh: "并行 / 外部车道", en: "Lanes / External", ja: "並行 / 外部レーン", vi: "Làn song song / Bên ngoài" },
     note: {
       zh: "长期队友、后台槽位或外部能力的进入面。",
       en: "Where long-lived workers, background slots, or external capability enter.",
       ja: "長期ワーカー、バックグラウンドスロット、外部能力が入ってくる面です。",
+      vi: "Nơi các worker lâu dài, khe chạy nền hoặc khả năng bên ngoài đi vào.",
     },
   },
 };
@@ -87,26 +91,31 @@ const UI_TEXT = {
     zh: "这章在系统里真正新增了什么",
     en: "What This Chapter Actually Adds",
     ja: "この章でシステムに何が増えたか",
+    vi: "Những gì chương này thực sự thêm vào hệ thống",
   },
   recordsTitle: {
     zh: "关键记录结构",
     en: "Key Records",
     ja: "主要レコード",
+    vi: "Cấu trúc bản ghi then chốt",
   },
   recordsNote: {
     zh: "这些不是实现细枝末节，而是开发者自己重建系统时最应该抓住的状态容器。",
     en: "These are the state containers worth holding onto when you rebuild the system yourself.",
     ja: "これらは実装の枝葉ではなく、自分で再構築するときに掴むべき状態容器です。",
+    vi: "Đây không phải là các chi tiết triển khai vụn vặt, mà là các trạng thái quan trọng nhất mà bạn cần nắm vững khi tự xây dựng lại hệ thống.",
   },
   handoffTitle: {
     zh: "主回流路径",
     en: "Primary Handoff Path",
     ja: "主回流経路",
+    vi: "Luồng bàn giao chính",
   },
   fresh: {
     zh: "新增",
     en: "NEW",
     ja: "新規",
+    vi: "MỚI",
   },
 };
 

@@ -1,6 +1,6 @@
 import { VERSION_META, type VersionId } from "@/lib/constants";
 
-export type LearningLocale = "zh" | "en" | "ja";
+export type LearningLocale = "zh" | "en" | "ja" | "vi";
 
 type VersionContent = {
   subtitle: string;
@@ -104,6 +104,103 @@ const VERSION_CONTENT: Record<LearningLocale, Record<VersionId, VersionContent>>
       subtitle: "外部能力总线",
       coreAddition: "作用域服务器 + 能力路由",
       keyInsight: "外部能力系统不该是外挂；它们应和原生工具一起处在同一控制面上。",
+    },
+  },
+  vi: {
+    s01: {
+      subtitle: "Vòng lặp tối giản",
+      coreAddition: "LoopState + phản hồi tool_result",
+      keyInsight: "Một agent thực sự bắt đầu từ việc đưa kết quả công cụ thực tế trở lại model, không chỉ là xuất ra văn bản.",
+    },
+    s02: {
+      subtitle: "Định tuyến ý đồ thành hành động",
+      coreAddition: "Định nghĩa công cụ + bản đồ dispatch",
+      keyInsight: "Bản thân vòng lặp chính không cần phức tạp; khả năng công cụ phát triển qua một lớp định tuyến rõ ràng.",
+    },
+    s03: {
+      subtitle: "Lập kế hoạch phiên",
+      coreAddition: "PlanningState + vòng lặp nhắc nhở",
+      keyInsight: "Với các tác vụ đa bước, kế hoạch hiển thị không phải là trang trí, mà là bộ ổn định ngăn trôi phiên.",
+    },
+    s04: {
+      subtitle: "Ngữ cảnh mới cho mỗi tiểu tác vụ",
+      coreAddition: "Ủy quyền với lịch sử tin nhắn cô lập",
+      keyInsight: "Sau khi di chuyển công việc thăm dò vào một ngữ cảnh con sạch sẽ, agent cha mới có thể liên tục bám sát mục tiêu chính.",
+    },
+    s05: {
+      subtitle: "Khám phá nhẹ nhàng, tải chuyên sâu",
+      coreAddition: "Thư viện kỹ năng + tiêm theo yêu cầu",
+      keyInsight: "Kiến thức chuyên môn không nên được nhồi nhét tất cả vào ngữ cảnh ngay từ đầu, mà nên được khám phá nhẹ nhàng và triển khai theo yêu cầu khi cần.",
+    },
+    s06: {
+      subtitle: "Giữ ngữ cảnh hoạt động nhỏ và ổn định",
+      coreAddition: "Dấu mốc bền vững + vi nén + nén tóm tắt",
+      keyInsight: "Mục tiêu của việc nén không phải là xóa lịch sử, mà là giữ vững tính liên tục và bộ nhớ làm việc cần thiết cho bước tiếp theo.",
+    },
+    s07: {
+      subtitle: "Ý đồ phải qua cổng an toàn",
+      coreAddition: "Pipeline deny / mode / allow / ask",
+      keyInsight: "Ý đồ thực thi do model tạo ra phải đi qua các cổng quyền hạn rõ ràng trước khi trở thành hành động thực sự.",
+    },
+    s08: {
+      subtitle: "Mở rộng mà không cần viết lại vòng lặp",
+      coreAddition: "Sự kiện vòng đời + Hook tác dụng phụ",
+      keyInsight: "Hook cho phép hệ thống phát triển xung quanh vòng lặp chính, thay vì liên tục viết lại bản thân vòng lặp chính đó.",
+    },
+    s09: {
+      subtitle: "Chỉ lưu những gì tồn tại qua các phiên",
+      coreAddition: "Bản ghi bộ nhớ có kiểu + đường dẫn tải lại",
+      keyInsight: "Chỉ những kiến thức xuyên phiên, không thể suy luận lại từ không gian làm việc hiện tại, mới đáng để đưa vào memory.",
+    },
+    s10: {
+      subtitle: "Lắp ráp đầu vào như một dây chuyền",
+      coreAddition: "Phân đoạn Prompt + lắp ráp động",
+      keyInsight: "Model không nhìn thấy một khối prompt cố định, mà là một pipeline đầu vào được lắp ráp theo từng giai đoạn.",
+    },
+    s11: {
+      subtitle: "Khôi phục trước, tiếp tục sau",
+      coreAddition: "Lý do tiếp tục + nhánh thử lại",
+      keyInsight: "Hệ thống phải phân biệt rõ ràng lúc này mình đang tiếp tục, thử lại, hay đang trong quy trình khôi phục.",
+    },
+    s12: {
+      subtitle: "Đồ thị công việc bền vững",
+      coreAddition: "Bản ghi Tác vụ + phụ thuộc + quy tắc mở khóa",
+      keyInsight: "Danh sách Todo phù hợp cho lập kế hoạch trong phiên, đồ thị tác vụ bền vững chịu trách nhiệm điều phối công việc xuyên bước, xuyên giai đoạn.",
+    },
+    s13: {
+      subtitle: "Tách biệt mục tiêu tác vụ và khe chạy",
+      coreAddition: "RuntimeTaskState + các khe thực thi không đồng bộ",
+      keyInsight: "Mô tả tác vụ bền vững cho biết cần hoàn thành cái gì, khe chạy mô tả ai đang chạy, chạy đến đâu; hai điều liên quan nhưng không phải là một.",
+    },
+    s14: {
+      subtitle: "Để thời gian kích hoạt công việc",
+      coreAddition: "Kích hoạt định thời dựa trên runtime task",
+      keyInsight: "Khi nhiệm vụ có thể chạy ngầm, bản thân thời gian cũng trở thành một cổng khởi động khác.",
+    },
+    s15: {
+      subtitle: "Đồng đội chuyên trách dài hạn",
+      coreAddition: "Danh sách đội ngũ + vòng đời đồng đội",
+      keyInsight: "Một khi hệ thống chạy dài hạn, cần có những đồng đội có tên, có danh tính và tồn tại lâu dài, thay vì chỉ là tiểu tác vụ một lần.",
+    },
+    s16: {
+      subtitle: "Quy tắc yêu cầu-phản hồi chia sẻ",
+      coreAddition: "Phong bì giao thức + tương quan yêu cầu",
+      keyInsight: "Nhóm chỉ trở nên dễ hiểu, dễ gỡ lỗi và dễ mở rộng khi sự cộng tác tuân thủ các mô thức tin nhắn chung.",
+    },
+    s17: {
+      subtitle: "Tự nhận mục tiêu, tự chạy tiếp",
+      coreAddition: "Polling nhàn rỗi + tự nhận theo vai trò + ngữ cảnh khôi phục",
+      keyInsight: "Tính tự chủ bắt đầu từ: đồng đội có thể tìm thấy việc có thể làm một cách an toàn, nhận nó và tiếp tục thực thi với danh tính đúng.",
+    },
+    s18: {
+      subtitle: "Thư mục riêng, làn chạy riêng",
+      coreAddition: "Trạng thái task-worktree + vòng đời enter / closeout rõ ràng",
+      keyInsight: "Task quản lý mục tiêu, worktree quản lý làn thực thi cô lập và trạng thái kết thúc; hai điều không được trộn lẫn thành một khái niệm.",
+    },
+    s19: {
+      subtitle: "Bus khả năng bên ngoài",
+      coreAddition: "Server có scope + định tuyến khả năng",
+      keyInsight: "Hệ thống khả năng bên ngoài không nên là phần cài thêm; chúng nên nằm trên cùng mặt phẳng kiểm soát với các công cụ gốc.",
     },
   },
   en: {
@@ -303,7 +400,7 @@ const VERSION_CONTENT: Record<LearningLocale, Record<VersionId, VersionContent>>
 };
 
 export function normalizeLearningLocale(locale: string): LearningLocale {
-  if (locale === "zh" || locale === "ja") return locale;
+  if (locale === "zh" || locale === "ja" || locale === "vi") return locale;
   return "en";
 }
 

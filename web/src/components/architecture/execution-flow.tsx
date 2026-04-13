@@ -21,80 +21,90 @@ const NODE_COLORS: Record<string, string> = {
 
 const NODE_GUIDE = {
   start: {
-    title: { zh: "入口", en: "Entry", ja: "入口" },
+    title: { zh: "入口", en: "Entry", ja: "入口", vi: "Điểm vào" },
     note: {
       zh: "这轮从哪里开始进入系统。",
       en: "Where the current turn enters the system.",
       ja: "このターンがどこから入るかを示します。",
+      vi: "Nơi lượt hiện tại bắt đầu đi vào hệ thống.",
     },
   },
   process: {
-    title: { zh: "主处理", en: "Process", ja: "主処理" },
+    title: { zh: "主处理", en: "Process", ja: "主処理", vi: "Xử lý chính" },
     note: {
       zh: "系统内部稳定推进的一步。",
       en: "A stable internal processing step.",
       ja: "システム内部で安定して進む一段です。",
+      vi: "Một bước xử lý nội bộ ổn định.",
     },
   },
   decision: {
-    title: { zh: "分叉判断", en: "Decision", ja: "分岐判断" },
+    title: { zh: "分叉判断", en: "Decision", ja: "分岐判断", vi: "Quyết định" },
     note: {
       zh: "系统在这里决定往哪条分支走。",
       en: "Where the system chooses a branch.",
       ja: "ここでどの分岐へ進むかを決めます。",
+      vi: "Nơi hệ thống chọn một nhánh để tiếp tục.",
     },
   },
   subprocess: {
-    title: { zh: "子流程 / 外部车道", en: "Subprocess / Lane", ja: "子過程 / 外部レーン" },
+    title: { zh: "子流程 / 外部车道", en: "Subprocess / Lane", ja: "子過程 / 外部レーン", vi: "Tiến trình con / Làn" },
     note: {
       zh: "常见于外部执行、侧车流程或隔离车道。",
       en: "Often used for external execution, sidecars, or isolated lanes.",
       ja: "外部実行、サイドカー、隔離レーンなどでよく現れます。",
+      vi: "Thường dùng cho thực thi bên ngoài, tiến trình phụ hoặc các làn cô lập.",
     },
   },
   end: {
-    title: { zh: "回流 / 结束", en: "Write-back / End", ja: "回流 / 終了" },
+    title: { zh: "回流 / 结束", en: "Write-back / End", ja: "回流 / 終了", vi: "Ghi lại / Kết thúc" },
     note: {
       zh: "这轮在这里结束或回到主循环。",
       en: "Where the turn ends or writes back into the loop.",
       ja: "このターンが終わるか、主ループへ戻る場所です。",
+      vi: "Nơi lượt kết thúc hoặc ghi kết quả trở lại vòng lặp.",
     },
   },
 } as const;
 
 const UI_TEXT = {
-  readLabel: { zh: "读图方式", en: "How to Read", ja: "読み方" },
+  readLabel: { zh: "读图方式", en: "How to Read", ja: "読み方", vi: "Cách đọc sơ đồ" },
   readTitle: {
     zh: "先看主线回流，再看左右分支",
     en: "Read the mainline first, then inspect the side branches",
     ja: "まず主線の回流を見て、その後で左右の分岐を見る",
+    vi: "Xem luồng chính trước, sau đó kiểm tra các nhánh phụ",
   },
   readNote: {
     zh: "从上往下看时间顺序，中间通常是主线，左右是分支、隔离车道或恢复路径。真正重要的不是节点有多少，而是这一章新增的分叉与回流在哪里。",
     en: "Read top to bottom for time order. The center usually carries the mainline, while the sides hold branches, isolated lanes, or recovery paths. The key question is not how many nodes exist, but where this chapter introduces a new split and write-back.",
     ja: "上から下へ時間順に読みます。中央は主線、左右は分岐・隔離レーン・回復経路です。大事なのはノード数ではなく、この章で新しく増えた分岐と回流がどこかです。",
+    vi: "Đọc từ trên xuống dưới theo trình tự thời gian. Ở giữa thường là luồng chính, trong khi hai bên là các nhánh, làn cô lập hoặc đường dẫn khôi phục. Câu hỏi then chốt không phải là có bao nhiêu nút, mà là chương này giới thiệu điểm phân tách và ghi lại kết quả mới ở đâu.",
   },
-  focusLabel: { zh: "本章先盯住", en: "Focus First", ja: "まず注目" },
-  confusionLabel: { zh: "最容易混", en: "Easy to Confuse", ja: "混同しやすい点" },
-  goalLabel: { zh: "学完要会", en: "Build Goal", ja: "学習ゴール" },
-  legendLabel: { zh: "节点图例", en: "Node Legend", ja: "ノード凡例" },
-  laneTitle: { zh: "版面分区", en: "Visual Lanes", ja: "レーン区分" },
-  mainline: { zh: "主线", en: "Mainline", ja: "主線" },
+  focusLabel: { zh: "本章先盯住", en: "Focus First", ja: "まず注目", vi: "Tập trung trước tiên" },
+  confusionLabel: { zh: "最容易混", en: "Easy to Confuse", ja: "混同しやすい点", vi: "Dễ gây nhầm lẫn" },
+  goalLabel: { zh: "学完要会", en: "Build Goal", ja: "学習ゴール", vi: "Mục tiêu xây dựng" },
+  legendLabel: { zh: "节点图例", en: "Node Legend", ja: "ノード凡例", vi: "Chú giải nút" },
+  laneTitle: { zh: "版面分区", en: "Visual Lanes", ja: "レーン区分", vi: "Phân vùng hiển thị" },
+  mainline: { zh: "主线", en: "Mainline", ja: "主線", vi: "Luồng chính" },
   mainlineNote: {
     zh: "系统当前回合反复回到的那条路径。",
     en: "The path the system keeps returning to during the turn.",
     ja: "システムがこのターン中に繰り返し戻る経路です。",
+    vi: "Đường dẫn mà hệ thống liên tục quay lại trong suốt một lượt.",
   },
-  sideLane: { zh: "分支 / 侧车", en: "Branch / Side Lane", ja: "分岐 / サイドレーン" },
+  sideLane: { zh: "分支 / 侧车", en: "Branch / Side Lane", ja: "分岐 / サイドレーン", vi: "Nhánh / Làn phụ" },
   sideLaneNote: {
     zh: "权限分支、自治扫描、后台槽位、worktree 车道常在这里展开。",
     en: "Permission branches, autonomy scans, background slots, and worktree lanes often expand here.",
     ja: "権限分岐、自治スキャン、バックグラウンドスロット、worktree レーンはここで展開されます。",
+    vi: "Các nhánh quyền hạn, quét tự chủ, khe chạy nền và các làn worktree thường được triển khai tại đây.",
   },
   bottomNote: {
     zh: "虚线边框通常表示子流程或外部车道；箭头标签说明当前分叉为什么发生。",
     en: "Dashed borders usually indicate a subprocess or external lane; arrow labels explain why a branch was taken.",
     ja: "破線の枠は子過程や外部レーンを示すことが多く、矢印ラベルはなぜ分岐したかを示します。",
+    vi: "Viền nét đứt thường chỉ tiến trình con hoặc làn bên ngoài; các nhãn mũi tên giải thích tại sao nhánh đó được thực hiện.",
   },
 } as const;
 
