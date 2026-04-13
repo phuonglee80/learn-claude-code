@@ -1,116 +1,98 @@
-[English](./README.md) | [中文](./README-zh.md) | [日本語](./README-ja.md)
+[Tiếng Việt](./README.md) | [English](./README-en.md) | [中文](./README-zh.md) | [日本語](./README-ja.md)
 
-# Learn Claude Code
+# Học Claude Code (Learn Claude Code)
 
-A teaching repository for implementers who want to build a high-completion coding-agent harness from scratch.
+Một kho lưu trữ hướng dẫn dành cho những người phát triển muốn xây dựng một hệ thống coding-agent hoàn chỉnh từ con số 0.
 
-This repo does not try to mirror every product detail from a production codebase. It focuses on the mechanisms that actually decide whether an agent can work well:
+Dự án này không cố gắng sao chép mọi chi tiết sản phẩm từ một mã nguồn thực tế. Thay vào đó, nó tập trung vào các cơ chế cốt lõi quyết định liệu một agent có thực sự hoạt động hiệu quả hay không:
 
-- the loop
-- tools
-- planning
-- delegation
-- context control
-- permissions
-- hooks
-- memory
-- prompt assembly
-- tasks
-- teams
-- isolated execution lanes
-- external capability routing
+*   **Vòng lặp (The Loop)**
+*   **Công cụ (Tools)**
+*   **Lập kế hoạch (Planning)**
+*   **Ủy thác (Delegation)**
+*   **Kiểm soát ngữ cảnh (Context control)**
+*   **Quyền hạn (Permissions)**
+*   **Hooks**
+*   **Bộ nhớ (Memory)**
+*   **Lắp ráp Prompt (Prompt assembly)**
+*   **Nhiệm vụ (Tasks)**
+*   **Đội ngũ (Teams)**
+*   **Làn thực thi cô lập (Isolated execution lanes)**
+*   **Định tuyến khả năng bên ngoài (External capability routing)**
 
-The goal is simple:
+Mục tiêu rất đơn giản:
+> **Hiểu rõ khung xương thiết kế thực tế để bạn có thể tự mình xây dựng lại nó.**
 
-**understand the real design backbone well enough that you can rebuild it yourself.**
+---
 
-## What This Repo Is Really Teaching
+## Dự án này thực sự dạy điều gì?
 
-One sentence first:
+Tóm gọn trong một câu:
+**Mô hình (Model) thực hiện suy luận. Hệ thống (Harness) cung cấp cho mô hình một môi trường làm việc.**
 
-**The model does the reasoning. The harness gives the model a working environment.**
+Môi trường làm việc đó được tạo thành từ một vài phần hợp tác với nhau:
+- `Vòng lặp Agent`: hỏi mô hình, chạy công cụ, thêm kết quả, tiếp tục.
+- `Công cụ`: "đôi tay" của agent.
+- `Lập kế hoạch`: một cấu trúc nhỏ giúp công việc nhiều bước không bị lệch hướng.
+- `Quản lý ngữ cảnh`: giữ cho ngữ cảnh hoạt động nhỏ gọn và mạch lạc.
+- `Quyền hạn`: không để ý định của mô hình biến trực tiếp thành việc thực thi không an toàn.
+- `Hooks`: mở rộng hành vi xung quanh vòng lặp mà không cần viết lại mã nguồn vòng lặp.
+- `Bộ nhớ`: chỉ giữ lại những sự thật bền vững cần tồn tại qua các phiên làm việc.
+- `Xây dựng Prompt`: lắp ráp đầu vào cho mô hình từ các quy tắc ổn định và trạng thái thời gian thực.
+- `Tasks / Teams / Worktree / MCP`: phát triển từ lõi agent đơn lẻ thành một nền tảng làm việc lớn hơn.
 
-That working environment is made of a few cooperating parts:
+**Lời hứa của dự án này:**
+- Giảng dạy theo thứ tự logic, sạch sẽ.
+- Giải thích các khái niệm lạ trước khi bắt đầu sử dụng chúng.
+- Bám sát cấu trúc hệ thống thực tế.
+- Tránh làm người học bị ngợp bởi các chi tiết sản phẩm không liên quan.
 
-- `Agent Loop`: ask the model, run tools, append results, continue
-- `Tools`: the agent's hands
-- `Planning`: a small structure that keeps multi-step work from drifting
-- `Context Management`: keep the active context small and coherent
-- `Permissions`: do not let model intent turn into unsafe execution directly
-- `Hooks`: extend behavior around the loop without rewriting the loop
-- `Memory`: keep only durable facts that should survive sessions
-- `Prompt Construction`: assemble the model input from stable rules and runtime state
-- `Tasks / Teams / Worktree / MCP`: grow the single-agent core into a larger working platform
+---
 
-This is the teaching promise of the repo:
+## Dự án này cố tình KHÔNG dạy điều gì?
 
-- teach the mainline in a clean order
-- explain unfamiliar concepts before relying on them
-- stay close to real system structure
-- avoid drowning the learner in irrelevant product details
+Dự án này không cố gắng bảo tồn mọi chi tiết tồn tại trong một hệ thống sản xuất thực tế. Nếu một chi tiết không nằm ở trung tâm mô hình hoạt động của agent, nó sẽ không được đưa vào nội dung dạy chính. Điều đó bao gồm:
+- Cơ chế đóng gói và phát hành.
+- Các lớp tương thích đa nền tảng.
+- Kết nối chính sách doanh nghiệp.
+- Đo lường (telemetry) và kết nối tài khoản.
+- Các nhánh tương thích lịch sử.
+- Các tên gọi đặc thù của sản phẩm.
 
-## What This Repo Deliberately Does Not Teach
+---
 
-This repo is not trying to preserve every detail that may exist in a real production system.
+## Đối tượng hướng tới
 
-If a detail is not central to the agent's core operating model, it should not dominate the teaching line. That includes things like:
+Người đọc được giả định:
+- Biết Python cơ bản.
+- Hiểu về hàm, lớp (class), danh sách (list) và từ điển (dictionary).
+- Có thể hoàn toàn mới đối với các hệ thống agent.
 
-- packaging and release mechanics
-- cross-platform compatibility layers
-- enterprise policy glue
-- telemetry and account wiring
-- historical compatibility branches
-- product-specific naming accidents
+---
 
-Those details may matter in production. They do not belong at the center of a 0-to-1 teaching path.
+## Thứ tự đọc được đề xuất
 
-## Who This Is For
+Tài liệu tiếng Việt đã được bản địa hóa hoàn toàn. Thứ tự chương và bản đồ cơ chế được căn chỉnh trên tất cả các ngôn ngữ.
 
-The assumed reader:
+- Tổng quan kiến trúc: [`docs/vi/s00-architecture-overview.md`](./docs/vi/s00-architecture-overview.md)
+- Thứ tự đọc mã nguồn: [`docs/vi/s00f-code-reading-order.md`](./docs/vi/s00f-code-reading-order.md)
+- Thuật ngữ: [`docs/vi/glossary.md`](./docs/vi/glossary.md)
+- Phạm vi giảng dạy: [`docs/vi/teaching-scope.md`](./docs/vi/teaching-scope.md)
+- Cấu trúc dữ liệu: [`docs/vi/data-structures.md`](./docs/vi/data-structures.md)
 
-- knows basic Python
-- understands functions, classes, lists, and dictionaries
-- may be completely new to agent systems
+### Nếu đây là lần đầu bạn ghé thăm, hãy bắt đầu từ đây:
 
-So the repo tries to keep a few strong teaching rules:
+1. Đọc [`docs/vi/s00-architecture-overview.md`](./docs/vi/s00-architecture-overview.md) để nắm bắt bản đồ hệ thống.
+2. Đọc [`docs/vi/s00d-chapter-order-rationale.md`](./docs/vi/s00d-chapter-order-rationale.md) để hiểu tại sao các chương được sắp xếp như vậy.
+3. Đọc [`docs/vi/s00f-code-reading-order.md`](./docs/vi/s00f-code-reading-order.md) để biết nên mở file nào trước.
+4. Theo dõi 4 giai đoạn theo thứ tự: `s01-s06 -> s07-s11 -> s12-s14 -> s15-s19`.
+5. Sau mỗi giai đoạn, hãy dừng lại và tự mình xây dựng lại phiên bản nhỏ nhất trước khi tiếp tục.
 
-- explain a concept before using it
-- keep one concept fully explained in one main place
-- start from "what it is", then "why it exists", then "how to implement it"
-- avoid forcing beginners to assemble the system from scattered fragments
+---
 
-## Recommended Reading Order
+## Giao diện học tập Web
 
-The English docs are intended to stand on their own. The chapter order, bridge docs, and mechanism map are aligned across locales, so you can stay inside one language while following the main learning path.
-
-- Overview: [`docs/en/s00-architecture-overview.md`](./docs/en/s00-architecture-overview.md)
-- Code Reading Order: [`docs/en/s00f-code-reading-order.md`](./docs/en/s00f-code-reading-order.md)
-- Glossary: [`docs/en/glossary.md`](./docs/en/glossary.md)
-- Teaching Scope: [`docs/en/teaching-scope.md`](./docs/en/teaching-scope.md)
-- Data Structures: [`docs/en/data-structures.md`](./docs/en/data-structures.md)
-
-## If This Is Your First Visit, Start Here
-
-Do not open random chapters first.
-
-The safest path is:
-
-1. Read [`docs/en/s00-architecture-overview.md`](./docs/en/s00-architecture-overview.md) for the full system map.
-2. Read [`docs/en/s00d-chapter-order-rationale.md`](./docs/en/s00d-chapter-order-rationale.md) so the chapter order makes sense before you dive into mechanism detail.
-3. Read [`docs/en/s00f-code-reading-order.md`](./docs/en/s00f-code-reading-order.md) so you know which local files to open first.
-4. Follow the four stages in order: `s01-s06 -> s07-s11 -> s12-s14 -> s15-s19`.
-5. After each stage, stop and rebuild the smallest version yourself before continuing.
-
-If the middle and late chapters start to blur together, reset in this order:
-
-1. [`docs/en/data-structures.md`](./docs/en/data-structures.md)
-2. [`docs/en/entity-map.md`](./docs/en/entity-map.md)
-3. the bridge docs closest to the chapter you are stuck on
-4. then return to the chapter body
-
-## Web Learning Interface
-
-If you want a more visual way to understand the chapter order, stage boundaries, and chapter-to-chapter upgrades, run the built-in teaching site:
+Nếu bạn muốn một cách trực quan hơn để hiểu thứ tự chương và các nâng cấp giữa các chương, hãy chạy trang web hướng dẫn tích hợp:
 
 ```sh
 cd web
@@ -118,144 +100,37 @@ npm install
 npm run dev
 ```
 
-Then use these routes:
+Sau đó sử dụng các đường dẫn này:
+- `/vi`: trang bắt đầu tiếng Việt.
+- `/vi/timeline`: cái nhìn rõ ràng nhất về lộ trình chính.
+- `/vi/layers`: bản đồ ranh giới 4 giai đoạn.
+- `/vi/compare`: so sánh các bước liền kề và chẩn đoán bước nhảy.
 
-- `/en`: the English entry page for choosing a reading path
-- `/en/timeline`: the cleanest view of the full mainline
-- `/en/layers`: the four-stage boundary map
-- `/en/compare`: adjacent-step comparison and jump diagnosis
+---
 
-For a first pass, start with `timeline`.  
-If you are already in the middle and chapter boundaries are getting fuzzy, use `layers` and `compare` before you go deeper into source code.
-
-### Bridge Docs
-
-These are not extra main chapters. They are bridge documents that make the middle and late system easier to understand:
-
-- Chapter order rationale: [`docs/en/s00d-chapter-order-rationale.md`](./docs/en/s00d-chapter-order-rationale.md)
-- Code reading order: [`docs/en/s00f-code-reading-order.md`](./docs/en/s00f-code-reading-order.md)
-- Reference module map: [`docs/en/s00e-reference-module-map.md`](./docs/en/s00e-reference-module-map.md)
-- Query control plane: [`docs/en/s00a-query-control-plane.md`](./docs/en/s00a-query-control-plane.md)
-- One request lifecycle: [`docs/en/s00b-one-request-lifecycle.md`](./docs/en/s00b-one-request-lifecycle.md)
-- Query transition model: [`docs/en/s00c-query-transition-model.md`](./docs/en/s00c-query-transition-model.md)
-- Tool control plane: [`docs/en/s02a-tool-control-plane.md`](./docs/en/s02a-tool-control-plane.md)
-- Tool execution runtime: [`docs/en/s02b-tool-execution-runtime.md`](./docs/en/s02b-tool-execution-runtime.md)
-- Message and prompt pipeline: [`docs/en/s10a-message-prompt-pipeline.md`](./docs/en/s10a-message-prompt-pipeline.md)
-- Runtime task model: [`docs/en/s13a-runtime-task-model.md`](./docs/en/s13a-runtime-task-model.md)
-- MCP capability layers: [`docs/en/s19a-mcp-capability-layers.md`](./docs/en/s19a-mcp-capability-layers.md)
-- Team-task-lane model: [`docs/en/team-task-lane-model.md`](./docs/en/team-task-lane-model.md)
-- Entity map: [`docs/en/entity-map.md`](./docs/en/entity-map.md)
-
-### Four Stages
-
-1. `s01-s06`: build a useful single-agent core
-2. `s07-s11`: add safety, extension points, memory, prompt assembly, and recovery
-3. `s12-s14`: turn temporary session planning into durable runtime work
-4. `s15-s19`: move into teams, protocols, autonomy, isolated execution, and external capability routing
-
-### Main Chapters
-
-| Chapter | Topic | What you get |
-|---|---|---|
-| `s00` | Architecture Overview | the global map, key terms, and learning order |
-| `s01` | Agent Loop | the smallest working agent loop |
-| `s02` | Tool Use | a stable tool dispatch layer |
-| `s03` | Todo / Planning | a visible session plan |
-| `s04` | Subagent | fresh context per delegated subtask |
-| `s05` | Skills | load specialized knowledge only when needed |
-| `s06` | Context Compact | keep the active window small |
-| `s07` | Permission System | a safety gate before execution |
-| `s08` | Hook System | extension points around the loop |
-| `s09` | Memory System | durable cross-session knowledge |
-| `s10` | System Prompt | section-based prompt assembly |
-| `s11` | Error Recovery | continuation and retry branches |
-| `s12` | Task System | persistent task graph |
-| `s13` | Background Tasks | non-blocking execution |
-| `s14` | Cron Scheduler | time-based triggers |
-| `s15` | Agent Teams | persistent teammates |
-| `s16` | Team Protocols | shared coordination rules |
-| `s17` | Autonomous Agents | self-claiming and self-resume |
-| `s18` | Worktree Isolation | isolated execution lanes |
-| `s19` | MCP & Plugin | external capability routing |
-
-## Quick Start
-
-```sh
-git clone https://github.com/shareAI-lab/learn-claude-code
-cd learn-claude-code
-pip install -r requirements.txt
-cp .env.example .env
-```
-
-Then configure `ANTHROPIC_API_KEY` or a compatible endpoint in `.env`, and run:
-
-```sh
-python agents/s01_agent_loop.py
-python agents/s18_worktree_task_isolation.py
-python agents/s19_mcp_plugin.py
-python agents/s_full.py
-```
-
-Suggested order:
-
-1. Run `s01` and make sure the minimal loop really works.
-2. Read `s00`, then move through `s01 -> s11` in order.
-3. Only after the single-agent core plus its control plane feel stable, continue into `s12 -> s19`.
-4. Read `s_full.py` last, after the mechanisms already make sense separately.
-
-## How To Read Each Chapter
-
-Each chapter is easier to absorb if you keep the same reading rhythm:
-
-1. what problem appears without this mechanism
-2. what the new concept means
-3. what the smallest correct implementation looks like
-4. where the state actually lives
-5. how it plugs back into the loop
-6. where to stop first, and what can wait until later
-
-If you keep asking:
-
-- "Is this core mainline or just a side detail?"
-- "Where does this state actually live?"
-
-go back to:
-
-- [`docs/en/teaching-scope.md`](./docs/en/teaching-scope.md)
-- [`docs/en/data-structures.md`](./docs/en/data-structures.md)
-- [`docs/en/entity-map.md`](./docs/en/entity-map.md)
-
-## Repository Structure
+## Cấu trúc Repository
 
 ```text
 learn-claude-code/
-├── agents/              # runnable Python reference implementations per chapter
-├── docs/zh/             # Chinese mainline docs
-├── docs/en/             # English docs
-├── docs/ja/             # Japanese docs
-├── skills/              # skill files used in s05
-├── web/                 # web teaching platform
+├── agents/              # Các triển khai tham chiếu Python có thể chạy được cho mỗi chương
+├── docs/vi/             # Tài liệu hướng dẫn chính bằng tiếng Việt
+├── docs/en/             # Tài liệu tiếng Anh
+├── docs/zh/             # Tài liệu tiếng Trung
+├── docs/ja/             # Tài liệu tiếng Nhật
+├── skills/              # Các file kỹ năng được sử dụng trong s05
+├── web/                 # Nền tảng giảng dạy Web (Next.js)
 └── requirements.txt
 ```
 
-## Language Status
+---
 
-Chinese is still the canonical teaching line and the fastest-moving version.
+## Mục tiêu cuối cùng
 
-- `zh`: most reviewed and most complete
-- `en`: main chapters plus the major bridge docs are available
-- `ja`: main chapters plus the major bridge docs are available
+Khi kết thúc lộ trình này, bạn sẽ có thể trả lời rõ ràng các câu hỏi sau:
+- Trạng thái tối thiểu mà một coding agent cần là gì?
+- Tại sao `tool_result` lại là trung tâm của vòng lặp?
+- Khi nào nên sử dụng một subagent thay vì nhồi nhét thêm vào một ngữ cảnh?
+- Các vấn đề mà permissions, hooks, memory, prompt assembly và tasks giải quyết là gì?
+- Khi nào một hệ thống agent đơn lẻ nên phát triển thành tasks, teams, worktrees và MCP?
 
-If you want the fullest and most frequently refined explanation path, use the Chinese docs first.
-
-## End Goal
-
-By the end of the repo, you should be able to answer these questions clearly:
-
-- what is the minimum state a coding agent needs?
-- why is `tool_result` the center of the loop?
-- when should you use a subagent instead of stuffing more into one context?
-- what problem do permissions, hooks, memory, prompt assembly, and tasks each solve?
-- when should a single-agent system grow into tasks, teams, worktrees, and MCP?
-
-If you can answer those questions clearly and build a similar system yourself, this repo has done its job.
+Nếu bạn có thể trả lời những câu hỏi này một cách rõ ràng và tự mình xây dựng một hệ thống tương tự, dự án này đã hoàn thành nhiệm vụ của nó.
